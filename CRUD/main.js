@@ -16,6 +16,7 @@ const pool = new Pool({
   port: 5433,
 });
 
+// get All Users
 app.get("/get/users", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM emp_data");
@@ -26,6 +27,7 @@ app.get("/get/users", async (req, res) => {
   }
 });
 
+// Create User
 app.post("/create/users", async (req, res) => {
   const { id, fname, lname, age } = req.body;
   try {
@@ -38,6 +40,19 @@ app.post("/create/users", async (req, res) => {
   } catch (err) {
     console.error("Error executing query", err.message);
     res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
+
+//Delete User
+app.delete("/delete/user/:id", async (req, res) => {
+  const { id } = req.params;
+  // console.log("request", req);
+  // console.log("response", res);
+  try {
+    const result = await pool.query("DELETE FROM emp_data WHERE id = $1", [id]);
+    res.status(200).send(`User deleted with ID: ${id}`);
+  } catch (error) {
+    res.status(500).send(`Error deleting user: ${err.message}`);
   }
 });
 
