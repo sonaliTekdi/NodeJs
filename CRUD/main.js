@@ -26,20 +26,20 @@ app.get("/get/users", async (req, res) => {
   }
 });
 
-// app.post("/create/users", async (req, res) => {
-//   const { id, fname, lname, age } = req.body;
-//   try {
-//     const result = await pool.query(
-//       "INSERT INTO emp_data (id,fname, lname, age) VALUES ($1, $2, $3,$4) RETURNING *",
-//       [id, fname, lname, age]
-//     );
+app.post("/create/users", async (req, res) => {
+  const { id, fname, lname, age } = req.body;
+  try {
+    const result = await pool.query(
+      "INSERT INTO emp_data (id, fname, lname, age) VALUES ($1, $2, $3, $4) RETURNING *",
+      [id, fname, lname, age]
+    );
 
-//     res.status(201).json(result.rows[0]);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Server error");
-//   }
-// });
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error executing query", err.message);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
