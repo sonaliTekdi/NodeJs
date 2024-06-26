@@ -1,0 +1,6 @@
+Todo List App:
+1) Backend (Node.js): Create an API that allows users to create, 
+read, update, and delete (CRUD) todo items. 
+Each todo item should have a title and a completed status.
+2) Frontend (React): Build a simple interface to display the list of todos,
+ a form to add a new todo, and buttons to mark a todo as completed or delete it.
